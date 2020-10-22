@@ -1,0 +1,75 @@
+package main
+
+func realFn (vc f64, min f64, max f64) (out f64){
+	//out = 100.00 * (vc - min)/(max-min)
+}
+
+func tradingBot (n f64) (out f64){
+	// set of rules that will evolve
+	var res f64
+	res = n - 50.00D
+	if (res < 50.00D){
+		out = -1.00D
+	}
+	if ( res == 0.00D ){
+		out = 0.00D
+	} 
+	if ( res > 50.00D ){
+		out = 1.00D
+	} 
+}
+
+func getMarketPrice(n i32) (out []f64) {
+	// Generate Random Market Price 
+	var rnum f64
+	str.print("============Generating Random Market Price==========")
+		
+	for c:=0; c < n; c++{
+
+		rnum =  f64.rand(1, 2)
+
+		if(rnum < 0.60D){ 
+			out = append(out, rnum + 100.00D)
+			f64.print(rnum + 100.00D)
+		}
+
+		if (rnum > 0.60D){ 
+			out = append(out, rnum + 50.00D)
+			f64.print(rnum + 50.00D)
+		}
+	} 
+} 
+
+func start(){
+
+}
+
+func main () (out f64){
+
+	var numPoints i32
+	var inps []f64
+	var outs []f64
+	
+	inps = getMarketPrice(100)
+	numPoints = len(inps)	
+	i32.print(numPoints)
+	
+	str.print("==========TradingBot Starts==========")
+	for c:=0; c<numPoints; c++{
+		printf("%f\n", tradingBot(inps[c]))	
+	}
+	
+	//var target aff
+	//target = -> {pkg(main) fn(tradingBot)}
+	
+	//var fnBag aff
+	//fnBag = ->{fn(f64.add) fn(f64.mul) fn(f64.sub) fn(f64.div)}
+	
+	// send to evolution
+	//evolve(target, fnBag, inps, outs, 5, 100, 0.1D)
+	
+	//str.print("Testing evolve solution")
+	//for i=0; i < numPoints; i++ {
+	//printf("%f\n", tradingBot(inps[c]))
+	//} 
+}

@@ -1,0 +1,69 @@
+package main
+
+var isNextOperationBuy bool
+var UPWARD_TREND_TRESHOLD f64
+var DIP_TRESHOLD f64
+var PROFIT_TRESHOLD f64
+var STOP_LOSS_TRESHOLD f64
+var lastOpPrice f64
+
+isNextOperationBuy = true
+UPWARD_TREND_TRESHOLD = 1.5
+DIP_TRESHOLD = -2.25
+PROFIT_TRESHOLD = 1.25
+STOP_LOSS_TRESHOLD = -2.00
+lastOpPrice = 100 
+
+func getBalance() (out f64){
+	out = 1000.00
+}
+
+func getMarketPrice() (out []f64){
+	out = []f64{284.85, 288.00, 286.87, 288.89, 292.58, 292.45, 290.74, 294.04, 297.82, 298.05}
+}
+
+func placeSellOrder() (out f64){
+	// Calculate the amount to sell (base on some threshold)
+	// Send the Order
+	// Return balance
+}
+
+func placeBuyOrder() (out f64){
+	// Calculate the amount to buy (base on some threshold)
+	// Send the order 
+	// Return balance
+}
+
+func getOperationDetail(str operatonID){
+	// If is real need to send to an API for the detail of an operation
+	// Return operation detail
+} 
+
+func tryToBuy(percetageDiff f64) (out bool){
+	if(percetageDiff >= UPWARD_TREND_TRESHOLD || percetageDiff <= DIP_TRESHOLD){
+		lastOpPrice = placeBuyOrder()
+		isNextOperationBuy = false
+		out = true	
+	}
+}
+
+func tryToSell(percetageDiff f64) (out bool){
+	if(percetageDiff >= PROFIT_TRESHOLD || percetageDiff <= STOP_LOSS_TRESHOLD){
+		lastOpPrice = placeSellOrder()
+		isNextOperationBuy = true
+	}
+}
+
+func attemptToMakeTrade(){
+	currentPrice := getMarketPrice()
+	percetageDiff := (currentPrice[len(currentPrice - 1)] - lastOpPrice)/lastOpPrice*100
+	if (isNextOperationBuy){
+		tryToBuy(percetageDiff)
+	}else{
+		trytoSell(percetageDiff)
+	}
+}
+
+func main(){
+
+}

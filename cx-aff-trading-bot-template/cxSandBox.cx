@@ -1,0 +1,34 @@
+package main
+
+func main(){
+	var string str
+	var array [5]i32
+	var slice []f64
+	var rnum f64
+
+	string = "this should print 20"
+	array = [5]i32{1, 2, 3, 4, 5}
+	slice = []f64{10.23D, 20.23D, 30.2D}
+	
+	for c:=0; c < 10; c++{
+
+		rnum =  f64.rand(1, 2)
+		f64.print(rnum)	
+		if(rnum < 0.60D){ 
+			f64.print(rnum + 100.00D)
+			slice = append(slice, rnum + 100.00D)
+		}
+
+		if (rnum > 0.60D){ 
+			f64.print(rnum + 50.00D) 
+			slice = append(slice, rnum + 50.00D)
+		} 
+	} 
+	
+	i32.print(len(slice))
+
+	//	i32.print(len(string)) 
+	//  i32.print(len(array)) 
+	//  i32.print(len(slice)) 
+	// 
+}
