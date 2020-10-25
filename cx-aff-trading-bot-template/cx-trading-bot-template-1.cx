@@ -1,5 +1,12 @@
 package main
 
+type Report struct {
+	trades []f64
+	sales i32
+	buys i32
+	stay i32
+}
+
 func realFn (vc f64, min f64, max f64) (out f64){
 	//out = 100.00 * (vc - min)/(max-min)
 }
@@ -7,15 +14,16 @@ func realFn (vc f64, min f64, max f64) (out f64){
 func tradingBot (n f64) (out f64){
 	// set of rules that will evolve
 	var res f64
-	res = n - 50.00D
-	if (res < 50.00D){
-		out = -1.00D
+
+	res = n - 100.00D
+	if (res < 300.00D){
+		out = 1.00D
 	}
-	if ( res == 0.00D ){
+	if ( res < 50D && res < 60D ){
 		out = 0.00D
 	} 
-	if ( res > 50.00D ){
-		out = 1.00D
+	if ( res > 500.00D ){
+		out = -1.00D
 	} 
 }
 
@@ -28,20 +36,48 @@ func getMarketPrice(n i32) (out []f64) {
 
 		rnum =  f64.rand(1, 2)
 
-		if(rnum < 0.60D){ 
-			out = append(out, rnum + 100.00D)
-			f64.print(rnum + 100.00D)
+		if(rnum > 0.50D){ 
+			out = append(out, rnum * 1000.00D)
+			f64.print(rnum * 1000.00D)
 		}
 
-		if (rnum > 0.60D){ 
-			out = append(out, rnum + 50.00D)
-			f64.print(rnum + 50.00D)
+		if (rnum < 0.50D){ 
+			out = append(out, rnum * 900.00D)
+			f64.print(rnum * 900.00D)
 		}
 	} 
 } 
 
-func start(){
 
+func play(inps []f64, numPoints i32, sales i32, buys i32, stay i32){
+
+	var res f64
+	var	report Report
+	
+	str.print("==========TradingBot Starts==========")
+		for c:=0; c<numPoints; c++{
+			printf("%f\n", tradingBot(inps[c]))	
+			res = tradingBot(inps[c])
+			if(res == 1.00D){
+				report.trades = append(report.trades, res)
+				buys = buys + 1
+				report.buys = buys
+			}
+			if(res == 0.00D){
+				report.trades = append(report.trades, res)
+				stay = stay + 1
+				report.stay = stay
+			}
+			if(res == -1.00D){
+				report.trades = append(report.trades, res)
+				sales = sales + 1
+				report.sales = sales
+			}
+		}
+	str.print("=========Analysis of the Trading Bot==========")
+	
+	//printf("%v\n", report)
+	//report
 }
 
 func main () (out f64){
@@ -49,15 +85,19 @@ func main () (out f64){
 	var numPoints i32
 	var inps []f64
 	var outs []f64
+	var sales i32
+	var buys i32
+	var stay i32
 	
 	inps = getMarketPrice(100)
 	numPoints = len(inps)	
 	i32.print(numPoints)
+	sales = 0
+	buys = 0
+	stay = 0
 	
-	str.print("==========TradingBot Starts==========")
-	for c:=0; c<numPoints; c++{
-		printf("%f\n", tradingBot(inps[c]))	
-	}
+	play(inps, numPoints, sales, buys, stay)
+	
 	
 	//var target aff
 	//target = -> {pkg(main) fn(tradingBot)}

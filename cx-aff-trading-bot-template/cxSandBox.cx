@@ -1,11 +1,24 @@
 package main
+	var sales i32
+	var buys i32
+	var stay i32
+
+	sales = 0
+	buys = 0
+	stay = 0
+
+
+
+type Result struct{
+	trades []f64
+	
+}
 
 func main(){
 	var string str
 	var array [5]i32
 	var slice []f64
 	var rnum f64
-
 	string = "this should print 20"
 	array = [5]i32{1, 2, 3, 4, 5}
 	slice = []f64{10.23D, 20.23D, 30.2D}
@@ -14,18 +27,19 @@ func main(){
 
 		rnum =  f64.rand(1, 2)
 		f64.print(rnum)	
-		if(rnum < 0.60D){ 
-			f64.print(rnum + 100.00D)
-			slice = append(slice, rnum + 100.00D)
+		if(rnum > 0.50D){ 
+			f64.print(rnum * 1000.00D)
+			slice = append(slice, rnum * 100.00D)
 		}
 
-		if (rnum > 0.60D){ 
-			f64.print(rnum + 50.00D) 
-			slice = append(slice, rnum + 50.00D)
+		if (rnum < 0.50D){ 
+			f64.print(rnum * 900.00D) 
+			slice = append(slice, rnum * 900.00D)
 		} 
 	} 
 	
 	i32.print(len(slice))
+	f64.print(rnum * 100D)
 
 	//	i32.print(len(string)) 
 	//  i32.print(len(array)) 
