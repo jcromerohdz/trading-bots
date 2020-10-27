@@ -1,7 +1,5 @@
 package main
 
-var coco i32
-
 type Report struct {
 	trades []f64
 	sells i32
@@ -48,7 +46,17 @@ func getMarketPrice(n i32) (out []f64) {
 			f64.print(rnum * 900.00D)
 		}
 	} 
-} 
+}
+
+func tradingBotReport(report Report){
+	
+	str.print("=========Analysis of the Trading Bot==========")
+	
+	printf("Transactions total: %d\n", len(report.trades))
+	printf("Sells: %d\n", report.sells)	
+	printf("Buys: %d\n", report.buys)	
+	printf("Stay: %d\n", report.stay)	
+}
 
 
 func play(inps []f64, numPoints i32, sells i32, buys i32, stay i32){
@@ -76,10 +84,8 @@ func play(inps []f64, numPoints i32, sells i32, buys i32, stay i32){
 				report.sells = sells
 			}
 		}
-	str.print("=========Analysis of the Trading Bot==========")
 	
-	//printf("%v\n", report)
-	//report
+	tradingBotReport(report)
 }
 
 func main () (out f64){
