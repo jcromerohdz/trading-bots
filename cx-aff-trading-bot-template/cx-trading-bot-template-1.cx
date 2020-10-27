@@ -1,8 +1,10 @@
 package main
 
+var coco i32
+
 type Report struct {
 	trades []f64
-	sales i32
+	sells i32
 	buys i32
 	stay i32
 }
@@ -49,7 +51,7 @@ func getMarketPrice(n i32) (out []f64) {
 } 
 
 
-func play(inps []f64, numPoints i32, sales i32, buys i32, stay i32){
+func play(inps []f64, numPoints i32, sells i32, buys i32, stay i32){
 
 	var res f64
 	var	report Report
@@ -70,8 +72,8 @@ func play(inps []f64, numPoints i32, sales i32, buys i32, stay i32){
 			}
 			if(res == -1.00D){
 				report.trades = append(report.trades, res)
-				sales = sales + 1
-				report.sales = sales
+				sells = sells + 1
+				report.sells = sells
 			}
 		}
 	str.print("=========Analysis of the Trading Bot==========")
@@ -85,18 +87,18 @@ func main () (out f64){
 	var numPoints i32
 	var inps []f64
 	var outs []f64
-	var sales i32
+	var sells i32
 	var buys i32
 	var stay i32
 	
 	inps = getMarketPrice(100)
 	numPoints = len(inps)	
 	i32.print(numPoints)
-	sales = 0
+	sells = 0
 	buys = 0
 	stay = 0
 	
-	play(inps, numPoints, sales, buys, stay)
+	play(inps, numPoints, sells, buys, stay)
 	
 	
 	//var target aff
