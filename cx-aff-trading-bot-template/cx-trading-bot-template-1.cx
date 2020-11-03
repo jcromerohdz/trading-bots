@@ -1,6 +1,7 @@
 package main
 
 var budget f64
+var quantity i32
 
 type Report struct {
 	trades []f64
@@ -9,33 +10,39 @@ type Report struct {
 	stay i32
 	initialBudget f64
 	currentBudget f64
+	stockQuantity i32
 }
 
 func realFn (vc f64, min f64, max f64) (out f64){
 	//out = 100.00 * (vc - min)/(max-min)
 }
 
-func tradingBot (n f64, budget f64) (out f64){
+func tradingBot (n f64, budget f64, quantity i32) (out f64){
 	// set of rules that will evolve
 	var res f64
 	//res = n - 100.00D
 	res = n
 	if(budget > res){
-		str.print("###############")
+		str.print("BUY")
 		if (res < 300.00D){
 			out = 1.00D
 			f64.print(res)
 		}
+
 		if ( res > 400D && res < 499D ){
 			out = 0.00D
 			f64.print(res)
-		} 
-		if ( res > 500.00D ){
-			out = -1.00D
-			f64.print(res)
+		}
+
+		if(quantity != 0){
+			if ( res > 500.00D ){
+				i32.print(quantity)
+				str.print("SELL")
+				out = -1.00D
+				f64.print(res)
+			}
 		}
 	}
- 
 }
 
 func getMarketPrice(n i32) (out []f64) {
@@ -71,6 +78,7 @@ func tradingBotReport(report Report){
 	f64.print(report.initialBudget)
 	printf("Current Budget: %d\n", report.currentBudget)	
 	f64.print(report.currentBudget)
+	printf("Stock Quantity: %d\n", report.stockQuantity)	
 }
 
 func play(inps []f64, numPoints i32, sells i32, buys i32, stay i32){
@@ -79,20 +87,24 @@ func play(inps []f64, numPoints i32, sells i32, buys i32, stay i32){
 	var	report Report
 	var op f64
 	budget = 1000.00D
+	quantity = 0
 	report.initialBudget = budget
 	
 	str.print("==========TradingBot Starts==========")
 		for c:=0; c<numPoints; c++{
 			f64.print(budget)
-			printf("%f\n", tradingBot(inps[c], budget))	
+			printf("%f\n", tradingBot(inps[c], budget, quantity))	
 			op = inps[c]  
-			res = tradingBot(inps[c], budget)
+			res = tradingBot(inps[c], budget, quantity)
 			
 			if(res == 1.00D){
 				report.trades = append(report.trades, res)
 				buys = buys + 1
 				report.buys = buys
 				budget = budget - op
+				quantity = quantity + 1
+				str.print("+++++++")
+				i32.print(quantity)
 			}
 			if(res == 0.00D){
 				report.trades = append(report.trades, res)
@@ -104,9 +116,13 @@ func play(inps []f64, numPoints i32, sells i32, buys i32, stay i32){
 				sells = sells + 1
 				report.sells = sells
 				budget = budget + op
+				quantity = quantity - 1
+				str.print("-------")
+				i32.print(quantity)
 			}
 		}
-	
+
+	report.stockQuantity = quantity	
 	report.currentBudget = budget	
 	tradingBotReport(report)
 }
